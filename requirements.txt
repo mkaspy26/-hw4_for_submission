@@ -1,0 +1,7 @@
+# Python packages for the Campus Customs backend (tested on Python 3.14)
+# Install:  python3 -m venv backend/.venv && backend/.venv/bin/pip install -r requirements.txt
+fastapi==0.143.0
+uvicorn[standard]==0.54.0
+pydantic==2.13.5
+pydantic-ai-slim[openai]==2.54.0
+openai==3.26.0

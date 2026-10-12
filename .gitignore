@@ -1,0 +1,28 @@
+# Secrets: never commit
+.env
+backend/.session_secret
+
+# Private data: not pushed (place it back locally, see README)
+data/campus_customs.db
+data/products/
+*.db
+
+# Personal launcher shortcuts
+me/
+
+# Python
+backend/.venv/
+__pycache__/
+*.pyc
+
+# Node / build
+frontend/node_modules/
+frontend/dist/
+*.tsbuildinfo
+
+# Logs and OS files
+*.log
+.backend.log
+.frontend.log
+.DS_Store
+output/*.tmp

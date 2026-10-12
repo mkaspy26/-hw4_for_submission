@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Campus Customs: Live Site Check (Problem 11)</title>
+  <style>
+    :root { --navy: #00356b; --ink: #1d2a3b; --muted: #5b6b82; --line: #d8e1ee; --ok: #1f7a4d; --warn: #9a5b00; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--ink); background: #f4f6fa; line-height: 1.55; }
+    header { background: var(--navy); color: white; padding: 2rem 1.5rem; }
+    header h1 { margin: 0 0 0.3rem; font-size: 1.9rem; }
+    header p { margin: 0; color: #cfe0f5; }
+    main { max-width: 980px; margin: 0 auto; padding: 1.5rem; }
+    .summary, section { background: white; border: 1px solid var(--line); border-radius: 12px; padding: 1.4rem 1.6rem; margin-bottom: 1.6rem; }
+    h2 { color: var(--navy); margin: 0 0 0.3rem; font-size: 1.45rem; }
+    h3 { color: var(--navy); margin: 1.4rem 0 0.4rem; font-size: 1.05rem; }
+    .pass { display: inline-block; background: #e3f4ea; color: var(--ok); font-weight: 700; font-size: 0.8rem; padding: 0.15rem 0.6rem; border-radius: 999px; margin-left: 0.4rem; vertical-align: middle; }
+    .warn { background: #fff3dc; color: var(--warn); }
+    figure { margin: 1rem 0 0.5rem; }
+    figure img { width: 100%; max-width: 800px; display: block; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 6px 18px rgba(6, 26, 51, 0.08); }
+    figcaption { margin-top: 0.55rem; font-size: 0.97rem; }
+    figcaption strong { color: var(--navy); }
+    table { border-collapse: collapse; width: 100%; font-size: 0.92rem; margin: 0.6rem 0; }
+    th, td { border: 1px solid var(--line); padding: 0.45rem 0.6rem; text-align: left; vertical-align: top; }
+    th { background: #f3f6fb; color: var(--navy); }
+    code { background: #eef2f8; padding: 0.05rem 0.35rem; border-radius: 4px; font-size: 0.88em; }
+    .muted { color: var(--muted); font-size: 0.9rem; }
+    ul { margin: 0.4rem 0; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Campus Customs: Live Site Check</h1>
+  <p>Problem 11 · Tested in the running app on 12 October 2026</p>
+</header>
+
+<main>
+  <div class="summary">
+    <h2>Summary</h2>
+    <table>
+      <tr><th>Check</th><th>Result</th></tr>
+      <tr><td>1. Chat checks an item's inventory (honest stock + price from the DB)</td><td><span class="pass">PASS</span></td></tr>
+      <tr><td>2. Dynamic search-result cards appear after a category question</td><td><span class="pass">PASS</span></td></tr>
+      <tr><td>3. Smart suggestion chips in the chat (Problem 9)</td><td><span class="pass">PASS</span></td></tr>
+    </table>
+    <p class="muted">
+      <strong>Setup:</strong> React + Vite front end at <code>http://localhost:5173</code> and FastAPI + PydanticAI backend at
+      <code>http://localhost:8000</code> (<code>uvicorn main:app --reload --port 8000</code>). The model is
+      <code>gpt-5.6-luna</code> via Portkey. Tested as a guest in the browser. Every number the assistant gave was checked
+      against <code>data/campus_customs.db</code> with SQL (results in each "Verified against the database" table).
+    </p>
+  </div>
+
+  <!-- ===================================================== -->
+  <section id="inventory">
+    <h2>1. Chat checks the inventory level of an item <span class="pass">PASS</span></h2>
+    <p>On the Products page I asked Sir Handsome Dan, the shopping assistant, about stock and price for one product, then a follow-up about a sold-out size.</p>
+
+    <figure>
+      <img src="app_check_images/inventory.png" alt="Chat answering: Only 2 Fencing Left Chest Hoodies remain in XL. The price is $68." />
+      <figcaption>
+        <strong>"How many Fencing Left Chest Hoodies are left in XL, and what's the price?"</strong> The assistant answers
+        <em>"Only <b>2</b> … remain in <b>XL</b>. The price is <b>$68</b>"</em>, which is exactly the database's XL quantity
+        and catalogue price. The product card under the reply is also built straight from the DB.
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img src="app_check_images/inventory_soldout.png" alt="Chat answering: L is sold out for the Fencing Left Chest Hoodie. In stock in S, M, and XL." />
+      <figcaption>
+        <strong>Follow-up: "What about size L?"</strong> The assistant says plainly <em>"<b>L is sold out</b>"</em> and lists
+        the sizes that are in stock (S, M, XL). It is honest about zero stock instead of guessing, and it understood "size L"
+        referred to the same hoodie.
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img src="app_check_images/inventory_product_page.png" alt="Fencing Left Chest Hoodie product page showing XS sold out, S 12 left, M 15 left, L sold out, XL 2 left, XXL sold out." />
+      <figcaption>
+        <strong>Cross-check on the product page,</strong> which reads inventory straight from the DB: XL <b>2 left</b> and
+        L <b>Sold out</b>, the same numbers the chat gave.
+      </figcaption>
+    </figure>
+
+    <h3>Verified against the database</h3>
+    <table>
+      <tr><th>Query</th><th>Result</th><th>Chat said</th></tr>
+      <tr><td><code>SELECT price FROM catalogue WHERE product_id='fencing-left-chest-hoodie'</code></td><td>68.0</td><td>$68 ✅</td></tr>
+      <tr><td><code>SELECT size, quantity FROM inventory WHERE product_id='fencing-left-chest-hoodie'</code></td><td>XS=0, S=12, M=15, <b>L=0</b>, <b>XL=2</b>, XXL=0</td><td>"Only 2 … in XL" ✅ · "L is sold out" ✅ · "in stock in S, M, XL" ✅</td></tr>
+    </table>
+    <p class="muted">How it stays honest: the agent must call <code>check_stock</code> / <code>get_price</code> (DB tools), and output validators reject any $ amount or stock count that no tool returned that turn (see <code>output/harness.md</code> §4.2 and <code>output/usability.md</code> B2).</p>
+  </section>
+
+  <!-- ===================================================== -->
+  <section id="search-cards">
+    <h2>2. Dynamic search-result cards after a category question <span class="pass">PASS</span></h2>
+    <p>Starting on the Home page, I asked the chat a category question. The site moved to the Products page and showed the matches as product cards.</p>
+
+    <figure>
+      <img src="app_check_images/search_results_chat.png" alt="Products page with a 'Hoodies 27' results panel and the chat replying 'I found 27 hoodies and placed them on the page'." />
+      <figcaption>
+        <strong>"What hoodies do you have?"</strong> The chat replies <em>"I found <b>27 hoodies</b> and placed them on the
+        page"</em>, and the page updates on its own with a <em>"Chosen for you by Sir Handsome Dan · Hoodies 27"</em> panel.
+        The chat also shows mini cards and a "See all 27 on the page →" link.
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img src="app_check_images/search_results_page.png" alt="Results grid of hoodie cards with images, names, prices, short descriptions, size chips, and Few left badges." />
+      <figcaption>
+        <strong>The result cards on the page (chat closed):</strong> each card has the product image, name, price, short
+        description, size chips (sold-out sizes struck through), and a "Few left" badge. All of it comes from the DB, not
+        from the model's text, and every card opens the product's detail page.
+      </figcaption>
+    </figure>
+
+    <h3>Verified against the database</h3>
+    <table>
+      <tr><th>Query</th><th>Result</th><th>Site showed</th></tr>
+      <tr><td><code>SELECT COUNT(*) FROM catalogue WHERE garment_type||name LIKE '%hood%'</code></td><td>27</td><td>"27 hoodies", 27 cards ✅</td></tr>
+      <tr><td><code>SELECT DISTINCT price FROM catalogue WHERE … LIKE '%hood%'</code></td><td>45, 68, 88</td><td>"most are $68, with select styles at $45 or $88" ✅</td></tr>
+    </table>
+    <p class="muted">How it works: the agent returns <code>{message, product_ids, results_heading}</code>, and the backend turns the ids into DB product cards in <code>page_results</code>, which the front end renders (harness §2.1 and Appendix A5).</p>
+  </section>
+
+  <!-- ===================================================== -->
+  <section id="chips">
+    <h2>3. Smart suggestion chips in the chat (Problem 9) <span class="pass">PASS</span></h2>
+    <p>The chat shows clickable suggested questions above the text box, and they change depending on the page. One click sends the question.</p>
+
+    <figure>
+      <img src="app_check_images/suggestions_general.png" alt="Chat with general chips 'Show me hoodies', 'Gifts under $40', and the sent message 'Gifts under $40' with a results panel 'Gifts Under $40 25'." />
+      <figcaption>
+        <strong>General chips</strong> (Home/Products): <em>Show me hoodies · Gifts under $40 · What's in stock in size M? ·
+        Cheapest crewneck?</em> Clicking <b>"Gifts under $40"</b> sent it as a message with no typing. The assistant found
+        <b>25</b> items at <b>$32</b> and put them on the page.
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img src="app_check_images/suggestions_product.png" alt="Product page for District Vit Hoodie Vintage Bulldog with chat open, 'Asking about' banner, product chips, and a reply listing in-stock and sold-out sizes." />
+      <figcaption>
+        <strong>Product-page chips</strong> (opened with "Ask Sir Handsome Dan about this item"): the chips switch to
+        <em>What sizes are in stock? · What colors does it come in? · Show me similar items</em>, and the chat shows
+        <em>"Asking about: District Vit Hoodie Vintage Bulldog"</em>. Clicking <b>"What sizes are in stock?"</b> returned the
+        right sizes for <b>this</b> hoodie, with no product name typed.
+      </figcaption>
+    </figure>
+
+    <h3>Verified against the database</h3>
+    <table>
+      <tr><th>Query</th><th>Result</th><th>Chat said</th></tr>
+      <tr><td><code>SELECT COUNT(*), DISTINCT price FROM catalogue WHERE price &lt; 40</code></td><td>25 products, all $32</td><td>"25 gifts under $40, all … $32" ✅</td></tr>
+      <tr><td><code>SELECT size, quantity FROM inventory WHERE product_id='district-vit-hoodie-vintage-bulldog'</code></td><td>XS=12, S=12, M=15, L=15, XL=15, <b>XXL=0</b></td><td>"in stock in XS, S, M, L, and XL. XXL is sold out" ✅</td></tr>
+    </table>
+  </section>
+
+  <!-- ===================================================== -->
+  <section id="findings">
+    <h2>Issues found while testing <span class="pass warn">2 found</span></h2>
+    <ul>
+      <li>
+        <strong>Placeholder text in 3 product descriptions (data issue, not fixed).</strong> In the "Gifts under $40" screenshot,
+        the <em>Benjamin Franklin T Shirt</em> card reads "Campus Customs product photo (benjamin franklin t shirt). Vision
+        blocked; filename-based…". The same placeholder is stored in <code>catalogue.description</code> for
+        <code>benjamin-franklin-t-shirt</code>, <code>berkeley-sweater-fleece-jacket</code>, and
+        <code>timothy-dwight-college-crewneck</code>. It comes from the source data, so these three rows need real descriptions
+        written in the database. I didn't edit the DB during the test.
+      </li>
+      <li>
+        <strong>Fixed during testing:</strong> the chat header title still read "Handsome Dan". It was renamed to
+        "Sir Handsome Dan" before the screenshots were taken.
+      </li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>

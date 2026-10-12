@@ -1,0 +1,622 @@
+:root {
+  --yale-blue: #00356b;
+  --yale-light: #286dc0;
+  --bg: #f7f8fa;
+  --text: #1f2933;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: var(--yale-light); }
+
+.navbar {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.9rem 2rem; background: var(--yale-blue); color: white;
+}
+.brand { color: white; font-weight: 800; font-size: 1.25rem; text-decoration: none; letter-spacing: 0.02em; }
+.navbar nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+.navbar nav a { color: #dbe7f5; text-decoration: none; font-weight: 500; }
+.navbar nav a.active, .navbar nav a:hover { color: white; border-bottom: 2px solid white; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 2rem; min-height: 70vh; }
+.footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--border); }
+
+.btn {
+  display: inline-block; background: var(--yale-blue); color: white; border: none;
+  padding: 0.7rem 1.4rem; border-radius: 6px; font-weight: 600; text-decoration: none; cursor: pointer;
+}
+.btn:hover { background: var(--yale-light); }
+.muted { color: var(--muted); }
+.small { font-size: 0.85rem; }
+.error { color: #b91c1c; }
+.eyebrow { text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; color: var(--yale-light); font-weight: 700; margin: 0; }
+
+/* Home */
+.hero { background: linear-gradient(135deg, var(--yale-blue), var(--yale-light)); color: white; padding: 4rem 3rem; border-radius: 12px; }
+.hero .eyebrow { color: #cfe0f5; }
+.hero h1 { font-size: 2.8rem; margin: 0.5rem 0; }
+.hero p { max-width: 560px; font-size: 1.1rem; }
+.hero .btn { background: white; color: var(--yale-blue); margin-top: 1rem; }
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin: 2.5rem 0; }
+.features div { background: white; padding: 1.5rem; border-radius: 10px; border: 1px solid var(--border); }
+.features h3 { color: var(--yale-blue); margin-top: 0; }
+.visit { background: white; padding: 2rem; border-radius: 10px; border: 1px solid var(--border); }
+
+.prose { max-width: 720px; line-height: 1.65; }
+.prose h2 { color: var(--yale-blue); }
+
+/* Products grid */
+.products-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.search { padding: 0.6rem 1rem; border: 1px solid var(--border); border-radius: 6px; min-width: 280px; font-size: 1rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
+.card { background: white; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; text-decoration: none; color: inherit; transition: transform 0.15s, box-shadow 0.15s; }
+.card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); }
+.card { animation: card-in 0.45s ease both; animation-delay: calc(var(--i, 0) * 45ms); }
+.card-img { position: relative; overflow: hidden; }
+.card-img img { width: 100%; aspect-ratio: 1; object-fit: contain; background: white; display: block; transition: transform 0.3s; }
+.card:hover .card-img img { transform: scale(1.05); }
+.card-view { position: absolute; inset: auto 0 0 0; padding: 0.55rem; text-align: center; font-size: 0.85rem; font-weight: 600; color: white; background: rgba(0, 53, 107, 0.88); transform: translateY(100%); transition: transform 0.2s; }
+.card:hover .card-view { transform: translateY(0); }
+.badge-overlay { position: absolute; top: 0.6rem; left: 0.6rem; }
+.badge-low { background: #fef3c7; color: #92400e; }
+.size-chips { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: 0.5rem; }
+.chip { font-size: 0.7rem; font-weight: 600; padding: 0.1rem 0.4rem; border-radius: 4px; border: 1px solid var(--yale-blue); color: var(--yale-blue); }
+.chip.out { border-color: var(--border); color: #b0b6bf; text-decoration: line-through; }
+@keyframes card-in { from { opacity: 0; transform: translateY(14px) scale(0.98); } to { opacity: 1; transform: none; } }
+
+/* Chat results on the page */
+.chat-results {
+  margin: -0.5rem 0 2.5rem; padding: 1.5rem; border-radius: 16px; scroll-margin-top: 80px;
+  background: linear-gradient(135deg, #00356b 0%, #1f4f8f 55%, #286dc0 100%);
+  box-shadow: 0 12px 32px rgba(0, 53, 107, 0.25); animation: results-in 0.4s ease both;
+}
+.chat-results-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; color: white; margin-bottom: 1.25rem; }
+.chat-results .eyebrow { color: #cfe0f5; }
+.chat-results h2 { margin: 0.3rem 0; font-size: 1.8rem; display: flex; align-items: center; gap: 0.6rem; }
+.count-pill { font-size: 0.9rem; background: white; color: var(--yale-blue); border-radius: 999px; padding: 0.15rem 0.65rem; }
+.chat-results-query { margin: 0; color: #dbe7f5; font-style: italic; }
+.btn-ghost { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.6); border-radius: 6px; padding: 0.45rem 0.9rem; cursor: pointer; font: inherit; white-space: nowrap; }
+.btn-ghost:hover { background: rgba(255,255,255,0.12); }
+.chat-results .card { border: none; }
+@keyframes results-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+.chat-see-all { align-self: flex-start; background: none; border: none; color: var(--yale-light); font-weight: 600; font-size: 0.85rem; cursor: pointer; padding: 0; }
+.chat-see-all:hover { text-decoration: underline; }
+.card-body { padding: 0.9rem 1rem 1.1rem; }
+.card-body h3 { font-size: 1rem; margin: 0 0 0.3rem; }
+.price { color: var(--yale-blue); font-weight: 700; margin: 0 0 0.4rem; }
+.price.big { font-size: 1.6rem; }
+.badge { display: inline-block; background: #fee2e2; color: #b91c1c; font-size: 0.75rem; padding: 0.15rem 0.5rem; border-radius: 4px; }
+
+/* Single item */
+.back { display: inline-block; margin-bottom: 1rem; text-decoration: none; }
+.detail { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+.detail-img { width: 100%; background: white; border-radius: 12px; border: 1px solid var(--border); object-fit: contain; }
+.detail-info h1 { margin: 0.3rem 0; }
+.detail-info h3 { margin-bottom: 0.4rem; }
+.sizes { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.size { display: flex; flex-direction: column; align-items: center; min-width: 70px; padding: 0.5rem; border: 1px solid var(--yale-blue); border-radius: 6px; background: white; font-size: 0.85rem; }
+.size.out { border-color: var(--border); color: var(--muted); text-decoration: line-through; }
+@media (max-width: 760px) { .detail { grid-template-columns: 1fr; } }
+
+/* Auth */
+.auth { max-width: 400px; margin: 0 auto; background: white; padding: 2rem; border-radius: 10px; border: 1px solid var(--border); }
+.auth form { display: flex; flex-direction: column; gap: 1rem; }
+.auth label { display: flex; flex-direction: column; gap: 0.3rem; font-weight: 500; font-size: 0.9rem; }
+.auth input { padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-size: 1rem; }
+
+/* Chat */
+.chat-launcher {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 50;
+  background: var(--yale-blue); color: white; border: none; border-radius: 999px;
+  padding: 0.9rem 1.3rem; font-size: 1rem; font-weight: 600; cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+.chat-panel {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 50;
+  width: 380px; height: 560px; max-height: calc(100vh - 3rem);
+  display: flex; flex-direction: column; background: white;
+  border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); overflow: hidden;
+}
+.chat-header { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: var(--yale-blue); color: white; font-weight: 600; }
+.chat-header button { background: none; border: none; color: white; font-size: 1.4rem; cursor: pointer; }
+.chat-messages { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.6rem; }
+.chat-row { display: flex; flex-direction: column; gap: 0.4rem; }
+.chat-row.user { align-items: flex-end; }
+.chat-row.assistant { align-items: flex-start; }
+.chat-msg { max-width: 85%; padding: 0.6rem 0.85rem; border-radius: 12px; font-size: 0.92rem; line-height: 1.4; }
+.chat-msg.user { align-self: flex-end; background: var(--yale-blue); color: white; white-space: pre-wrap; }
+.chat-msg.assistant { align-self: flex-start; background: #eef2f7; }
+.chat-msg p { margin: 0 0 0.4rem; }
+.chat-msg p:last-child { margin-bottom: 0; }
+.chat-msg ul { margin: 0.2rem 0 0.4rem; padding-left: 1.1rem; }
+.chat-msg.typing { color: var(--muted); font-style: italic; }
+.chat-cards { display: flex; gap: 0.5rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.2rem; }
+.chat-card { flex: 0 0 120px; background: white; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; text-decoration: none; color: inherit; font-size: 0.78rem; }
+.chat-card:hover { border-color: var(--yale-light); }
+.chat-card img { width: 100%; aspect-ratio: 1; object-fit: contain; background: white; display: block; }
+.chat-card > div { padding: 0.35rem 0.5rem 0.5rem; }
+.chat-card-name { font-weight: 600; line-height: 1.2; }
+.chat-card-price { color: var(--yale-blue); font-weight: 700; margin-top: 0.15rem; }
+.chat-input { display: flex; border-top: 1px solid var(--border); }
+.chat-input input { flex: 1; border: none; padding: 0.85rem; font-size: 0.95rem; outline: none; }
+.chat-input button { border: none; background: none; color: var(--yale-blue); font-weight: 700; padding: 0 1rem; cursor: pointer; }
+.chat-input button:disabled { color: var(--muted); cursor: default; }
+
+/* Nav auth state */
+.nav-user { color: white; font-weight: 600; }
+.nav-logout { background: none; border: 1px solid #dbe7f5; color: #dbe7f5; border-radius: 4px; padding: 0.2rem 0.7rem; cursor: pointer; font: inherit; }
+.nav-logout:hover { color: white; border-color: white; }
+
+/* Chat memory + page context */
+.chat-subtitle { font-size: 0.75rem; font-weight: 400; color: #cfe0f5; margin-top: 0.1rem; }
+.chat-context { padding: 0.45rem 1rem; font-size: 0.8rem; background: #eef4fb; color: var(--yale-blue); border-bottom: 1px solid var(--border); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* F1: filter bar */
+.filter-bar { display: flex; flex-direction: column; gap: 0.75rem; margin: 0.5rem 0 1rem; padding: 0.9rem 1rem; background: white; border: 1px solid var(--border); border-radius: 12px; position: sticky; top: 56px; z-index: 5; }
+.pills { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.pill { border: 1px solid var(--border); background: var(--bg); color: var(--text); border-radius: 999px; padding: 0.4rem 0.85rem; font: inherit; font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: all 0.15s; }
+.pill:hover { border-color: var(--yale-light); }
+.pill.active { background: var(--yale-blue); border-color: var(--yale-blue); color: white; }
+.pill-count { display: inline-block; min-width: 1.4em; margin-left: 0.25rem; padding: 0 0.35rem; border-radius: 999px; background: rgba(0, 53, 107, 0.08); font-size: 0.75rem; }
+.pill.active .pill-count { background: rgba(255, 255, 255, 0.2); }
+.filter-controls { display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap; font-size: 0.88rem; color: var(--muted); }
+.filter-controls label { display: flex; align-items: center; gap: 0.4rem; }
+.filter-controls select { padding: 0.35rem 0.5rem; border: 1px solid var(--border); border-radius: 6px; font: inherit; color: var(--text); background: white; }
+.link-btn { background: none; border: none; color: var(--yale-light); font: inherit; font-weight: 600; cursor: pointer; padding: 0; }
+.link-btn:hover { text-decoration: underline; }
+.empty { text-align: center; padding: 3rem 1rem; background: white; border: 1px dashed var(--border); border-radius: 12px; }
+
+/* F2: chat suggestions + ask button */
+.chat-suggestions { display: flex; gap: 0.4rem; overflow-x: auto; padding: 0.5rem 0.75rem; border-top: 1px solid var(--border); scrollbar-width: none; }
+.chat-suggestions::-webkit-scrollbar { display: none; }
+.suggestion { flex: 0 0 auto; border: 1px solid var(--yale-light); background: white; color: var(--yale-blue); border-radius: 999px; padding: 0.3rem 0.75rem; font: inherit; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.15s; }
+.suggestion:hover { background: var(--yale-blue); color: white; }
+.ask-btn { margin-top: 1.25rem; }
+
+/* =====================================================================
+   Problem 10: "Ancient Secrets of Yale" storefront theme
+   Navy + white only; Cinzel (carved-stone headings), Cormorant Garamond
+   (Head-of-College prose), Inter (UI).
+   ===================================================================== */
+:root {
+  --night: #061a33;
+  --navy-deep: #0a2547;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-ui: "Inter", system-ui, -apple-system, sans-serif;
+  font-family: var(--font-ui);
+  background: #f4f6fa;
+}
+body { background: #f4f6fa; }
+h1, h2, h3, .brand { font-family: var(--font-display); letter-spacing: 0.02em; }
+h1 { font-weight: 700; }
+h2 { font-weight: 700; color: var(--yale-blue); }
+.eyebrow { font-family: var(--font-display); letter-spacing: 0.22em; font-size: 0.72rem; }
+.btn { font-family: var(--font-display); letter-spacing: 0.08em; font-weight: 700; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.5rem; }
+.center { text-align: center; margin-top: 2rem; }
+
+/* ---- Nav ---- */
+.navbar { background: linear-gradient(180deg, var(--night), var(--yale-blue)); box-shadow: 0 2px 18px rgba(6, 26, 51, 0.35); padding: 0.7rem 2rem; }
+.brand { display: flex; align-items: center; gap: 0.7rem; font-size: 1.25rem; font-weight: 900; }
+.brand small { display: block; font-family: var(--font-display); font-size: 0.55rem; letter-spacing: 0.28em; font-weight: 500; color: #a9c1e0; margin-top: 2px; }
+.crest { filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.25)); }
+.navbar nav { align-items: center; }
+.navbar nav a { font-family: var(--font-display); font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.secrets-count { font-size: 0.72rem; letter-spacing: 0.08em; color: #cfe0f5; border: 1px solid rgba(207, 224, 245, 0.35); border-radius: 999px; padding: 0.2rem 0.6rem; cursor: help; }
+
+/* ---- Letters (Head's Study voice) ---- */
+.letter { position: relative; max-width: 780px; margin: 3.5rem auto; padding: 3rem 3.2rem 2.4rem; background: white; border: 1px solid var(--border);
+  box-shadow: 0 0 0 6px white, 0 0 0 7px #c8d5e6, 0 18px 40px rgba(6, 26, 51, 0.08); text-align: left; }
+.letter p { font-family: var(--font-serif); font-size: 1.28rem; line-height: 1.6; color: #1d2a3b; }
+.letter h1, .letter h2 { margin-top: 0.2rem; }
+.letter h2 { font-size: 1.35rem; margin-top: 1.8rem; }
+.letter-seal { position: absolute; top: -26px; left: 50%; margin-left: -26px; width: 52px; height: 52px; border-radius: 50%; background: var(--yale-blue); color: white;
+  display: grid; place-items: center; font-family: var(--font-display); font-weight: 900; box-shadow: 0 0 0 4px white, 0 4px 12px rgba(0, 0, 0, 0.25); }
+.drop-cap::first-letter { font-family: var(--font-display); float: left; font-size: 3.8em; line-height: 0.85; padding: 0.08em 0.12em 0 0; color: var(--yale-blue); font-weight: 900; }
+.signature { font-style: italic; text-align: right; color: var(--yale-blue) !important; }
+.about { margin-top: 2.5rem; }
+
+/* ---- Fourteen colleges (flip crests) ---- */
+.colleges { text-align: center; margin: 4rem 0; }
+.college-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+.college { perspective: 900px; background: none; border: none; padding: 0; height: 170px; cursor: pointer; font: inherit; }
+.college-inner { position: relative; display: block; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+.college.flipped .college-inner, .college:focus-visible .college-inner { transform: rotateY(180deg); }
+.college-front, .college-back { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; padding: 0.8rem; }
+.college-front { background: white; border: 1px solid var(--border); transition: box-shadow 0.2s, transform 0.2s; }
+.college:hover .college-front { box-shadow: 0 10px 24px rgba(0, 53, 107, 0.15); transform: translateY(-3px); }
+.college-back { background: var(--yale-blue); color: white; transform: rotateY(180deg); font-family: var(--font-serif); font-size: 1.02rem; line-height: 1.3; }
+.shield { width: 56px; height: 64px; display: grid; place-items: center; color: white; font-family: var(--font-display); font-weight: 900; font-size: 1.1rem;
+  background: var(--yale-blue); clip-path: polygon(0 0, 100% 0, 100% 62%, 50% 100%, 0 62%); }
+.college-name { font-family: var(--font-display); font-size: 0.8rem; font-weight: 700; color: var(--yale-blue); letter-spacing: 0.06em; }
+
+.treasures { text-align: center; margin: 4rem 0; }
+.treasures .grid { text-align: left; margin-top: 1.5rem; }
+.visit { display: flex; align-items: center; justify-content: space-between; gap: 2rem; background: linear-gradient(135deg, var(--night), var(--yale-blue)); color: white; border: none; border-radius: 14px; padding: 2.2rem 2.5rem; }
+.visit h2 { color: white; margin: 0.3rem 0 0.6rem; }
+.visit p { font-family: var(--font-serif); font-size: 1.2rem; color: #dbe7f5; max-width: 620px; }
+.visit .eyebrow { color: #a9c1e0; }
+.visit-dan { position: relative; flex: 0 0 auto; animation: bob 3s ease-in-out infinite; }
+
+/* ---- Product presentation: Gothic arch frames ---- */
+.card { border-radius: 14px; box-shadow: 0 1px 2px rgba(6, 26, 51, 0.04); }
+.card:hover { box-shadow: 0 16px 34px rgba(0, 53, 107, 0.16); transform: translateY(-5px); }
+.card-img { margin: 10px 10px 0; border-radius: 50% 50% 8px 8px / 22% 22% 8px 8px; border: 1px solid #e3e9f2; background: white; }
+.card-body h3 { font-size: 0.92rem; line-height: 1.3; }
+.price { font-family: var(--font-display); }
+.detail-img { border-radius: 50% 50% 14px 14px / 18% 18% 14px 14px; box-shadow: 0 0 0 8px white, 0 0 0 9px #c8d5e6, 0 20px 40px rgba(6, 26, 51, 0.12); }
+.detail-info h1 { font-size: 2.1rem; }
+.detail-desc { font-size: 1.02rem; line-height: 1.6; }
+.head-note { margin: 1.4rem 0; padding: 1.1rem 1.3rem; background: #f3f6fb; border-left: 3px solid var(--yale-blue); border-radius: 0 10px 10px 0; position: relative; }
+.head-note-kicker { display: block; font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.16em; color: var(--yale-light); text-transform: uppercase; margin-bottom: 0.4rem; }
+.head-note p { margin: 0; font-family: var(--font-serif); font-style: italic; font-size: 1.22rem; line-height: 1.5; color: #1d2a3b; }
+.detail-secret { margin-left: 0.6rem; }
+.products-header h1 { margin: 0.2rem 0 0; font-size: 2rem; color: var(--yale-blue); }
+.auth { position: relative; border-top: 4px solid var(--yale-blue); }
+.auth h1 { color: var(--yale-blue); margin-top: 0.3rem; }
+.auth-secret { position: absolute; top: 0.8rem; right: 1rem; }
+
+/* ---- Hidden secrets ---- */
+.secret { position: relative; display: inline-block; vertical-align: middle; }
+.secret-star { background: none; border: none; cursor: pointer; padding: 0 0.15rem; font-size: 0.85rem; line-height: 1; color: #7fa6d9;
+  text-shadow: 0 0 8px rgba(127, 166, 217, 0.9); animation: glimmer 2.4s ease-in-out infinite; }
+.great-hall .secret-star, .visit .secret-star, .footer .secret-star, .chat-header .secret-star { color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.9); }
+.secret.seen .secret-star { animation: none; opacity: 0.55; text-shadow: none; }
+@keyframes glimmer { 0%, 100% { opacity: 0.45; transform: scale(0.85) rotate(0deg); } 50% { opacity: 1; transform: scale(1.25) rotate(20deg); } }
+.secret-scroll { position: absolute; z-index: 70; top: 1.7rem; left: 50%; transform: translateX(-50%); width: 290px; display: flex; flex-direction: column; gap: 0.35rem;
+  padding: 1rem 1.1rem; background: white; color: #1d2a3b; text-align: left; border: 1px solid #c8d5e6; border-radius: 8px;
+  box-shadow: 0 0 0 4px white, 0 0 0 5px var(--yale-blue), 0 18px 36px rgba(6, 26, 51, 0.3); animation: unroll 0.35s ease both; font-family: var(--font-serif); font-size: 1.05rem; line-height: 1.4; text-shadow: none; letter-spacing: normal; text-transform: none; font-style: normal; font-weight: 500; white-space: normal; }
+.secret-scroll strong { font-family: var(--font-display); color: var(--yale-blue); font-size: 0.95rem; }
+.secret-kicker { font-family: var(--font-ui); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--yale-light); }
+@keyframes unroll { from { opacity: 0; transform: translateX(-50%) scaleY(0.6); transform-origin: top; } to { opacity: 1; transform: translateX(-50%) scaleY(1); } }
+.chat-header .secret-scroll { left: 0; transform: none; animation: none; }
+.secrets-complete { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; background: rgba(6, 26, 51, 0.7); backdrop-filter: blur(3px); }
+.secrets-complete > div { max-width: 460px; text-align: center; background: white; padding: 2.4rem; border-radius: 12px; box-shadow: 0 0 0 6px white, 0 0 0 7px var(--yale-blue); animation: rise 0.5s ease both; }
+.secrets-complete p { font-family: var(--font-serif); font-size: 1.2rem; }
+
+/* ---- Footer ---- */
+.footer { background: linear-gradient(180deg, var(--yale-blue), var(--night)); color: #cfe0f5; border-top: none; padding: 2.5rem 1rem; margin-top: 4rem; }
+.footer-motto { font-family: var(--font-display); font-size: 1.4rem; letter-spacing: 0.4em; color: white; margin-bottom: 0.6rem; }
+.footer-fine { font-family: var(--font-serif); font-style: italic; font-size: 1rem; color: #a9c1e0; }
+
+/* ---- Handsome Dan (old orb styles, superseded below) ---- */
+.dan { overflow: visible; }
+.dan-eyes { transform-box: fill-box; transform-origin: center; animation: blink 4.5s infinite; }
+@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+.dan-tongue { transform: translateY(-9px); transition: transform 0.2s; }
+.dan.licking .dan-tongue { animation: lick 0.42s ease-in-out 2; }
+.dan.licking { animation: head-tilt 0.84s ease-in-out; }
+@keyframes lick { 0% { transform: translateY(-9px); } 45% { transform: translateY(6px) scaleY(1.35); } 100% { transform: translateY(-9px); } }
+@keyframes head-tilt { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-10deg) scale(1.08); } 70% { transform: rotate(8deg) scale(1.08); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+.chat-launcher { display: none; }
+.dan-launcher { position: fixed; right: 1.4rem; bottom: 1.2rem; z-index: 50; background: white; border: 3px solid var(--yale-blue); border-radius: 50%;
+  width: 92px; height: 92px; display: grid; place-items: center; cursor: pointer; padding: 0;
+  box-shadow: 0 10px 26px rgba(6, 26, 51, 0.35), 0 0 0 6px rgba(255, 255, 255, 0.7); animation: bob 3s ease-in-out infinite; }
+.dan-launcher:hover { animation-play-state: paused; transform: scale(1.06); }
+.dan-launcher.is-licking { animation: none; transform: scale(1.12); }
+.dan-bubble { position: absolute; right: 100px; bottom: 32px; white-space: nowrap; background: white; color: var(--yale-blue); font-family: var(--font-display); font-size: 0.78rem; font-weight: 700;
+  padding: 0.5rem 0.8rem; border-radius: 12px 12px 2px 12px; box-shadow: 0 6px 18px rgba(6, 26, 51, 0.2); opacity: 0; transform: translateX(8px); transition: all 0.2s; pointer-events: none; }
+.dan-launcher:hover .dan-bubble { opacity: 1; transform: none; }
+.lick-overlay { position: fixed; inset: 0; z-index: 49; pointer-events: none; }
+.lick-streak { position: absolute; right: 40px; bottom: 70px; width: 150px; height: 230px; border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 60%, rgba(219, 231, 245, 0.75), rgba(173, 205, 245, 0.35) 45%, transparent 70%);
+  filter: blur(2px); transform-origin: bottom right; animation: lick-wipe 0.9s ease-out forwards; }
+@keyframes lick-wipe { 0% { opacity: 0; transform: scale(0.2) rotate(-25deg); } 35% { opacity: 1; transform: scale(1) rotate(-12deg); } 100% { opacity: 0; transform: scale(1.1) rotate(-8deg); } }
+.heart { position: absolute; right: 70px; bottom: 110px; color: #f28ba8; font-size: 1.4rem; animation: heart-up 0.9s ease-out forwards; }
+.heart.h2 { right: 40px; bottom: 120px; font-size: 1rem; animation-delay: 0.12s; }
+.heart.h3 { right: 100px; bottom: 100px; font-size: 1.1rem; animation-delay: 0.22s; }
+@keyframes heart-up { from { opacity: 0; transform: translateY(0) scale(0.6); } 30% { opacity: 1; } to { opacity: 0; transform: translateY(-80px) scale(1.2); } }
+
+/* ---- Chat panel feel ---- */
+.chat-panel { border-radius: 18px; border: 1px solid #c8d5e6; box-shadow: 0 20px 50px rgba(6, 26, 51, 0.35); animation: rise 0.3s ease both; }
+.chat-header { background: linear-gradient(135deg, var(--night), var(--yale-blue)); padding: 0.75rem 1rem; overflow: visible; }
+.chat-header-id { display: flex; align-items: center; gap: 0.7rem; }
+.chat-avatar { width: 46px; height: 46px; border-radius: 50%; background: white; display: grid; place-items: center; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4); }
+.chat-title { font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.05em; }
+.chat-messages { background: #f4f6fa; }
+.chat-msg.assistant { background: white; border: 1px solid #dfe6f0; border-radius: 4px 14px 14px 14px; box-shadow: 0 1px 2px rgba(6, 26, 51, 0.05); }
+.chat-msg.user { border-radius: 14px 4px 14px 14px; }
+.paws { display: inline-block; animation: bob 0.8s ease-in-out infinite; }
+.chat-context { font-family: var(--font-serif); font-size: 0.95rem; }
+.suggestion { font-family: var(--font-ui); }
+.chat-results { background: radial-gradient(ellipse at 20% 0%, #1a4a85, var(--yale-blue) 45%, var(--night)); }
+.chat-results h2 { color: white; }
+.card-img .badge-overlay { top: 0.7rem; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+.chat-header .secret-scroll { left: -190px; width: 260px; }
+
+/* =====================================================================
+   Revision: engraved courtyard hero, cute sitting Dan, paw-print secrets
+   ===================================================================== */
+@keyframes twinkle { from { opacity: 0.25; } to { opacity: 0.95; } }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+h1, h2, h3, .brand { letter-spacing: 0; }
+.eyebrow { letter-spacing: 0.18em; font-weight: 700; }
+.btn { letter-spacing: 0.02em; }
+.navbar nav a { letter-spacing: 0.06em; font-weight: 600; }
+.brand { font-weight: 800; font-size: 1.3rem; }
+.brand small { font-family: var(--font-ui); letter-spacing: 0.2em; }
+
+/* ---- Courtyard hero (engraving) ---- */
+.courtyard { position: relative; margin: -2rem calc(50% - 50vw) 0; padding-top: 3.2rem; overflow: hidden; text-align: center;
+  background: radial-gradient(ellipse at 50% 30%, #ffffff 0%, #f7f9fc 55%, #eef2f8 100%);
+  border-bottom: 1px solid #d8e1ee; }
+.courtyard::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
+  background-image: repeating-linear-gradient(0deg, rgba(0, 53, 107, 0.035) 0 1px, transparent 1px 4px); }
+.courtyard-text { position: relative; z-index: 2; max-width: 780px; margin: 0 auto; padding: 0 1.5rem; animation: rise 0.9s ease both; }
+.courtyard h1 { font-size: clamp(3rem, 7.5vw, 5.4rem); font-weight: 900; color: var(--yale-blue); margin: 0.3rem 0 0; line-height: 1.02; }
+.courtyard .hall-sub { font-family: var(--font-serif); font-style: italic; font-size: 1.45rem; color: #34465e; max-width: 580px; margin: 0.9rem auto 1.6rem; }
+.hall-actions { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+.btn-outline { background: white; color: var(--yale-blue); border: 1.5px solid var(--yale-blue); }
+.btn-outline:hover { background: #eef3fa; color: var(--yale-blue); }
+.courtyard-art { position: relative; max-width: 1240px; margin: 1.2rem auto 0; animation: rise 1.2s ease 0.15s both; }
+.engraving { display: block; width: 100%; height: auto; }
+.engraving .win { opacity: 0.85; }
+.engraving .win.lit { animation: window-glow 4.5s ease-in-out infinite; }
+@keyframes window-glow { 0%, 100% { opacity: 0.85; } 50% { opacity: 0.25; } }
+.engraving .eng-star { animation: twinkle 3.5s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; }
+.courtyard-dan { position: absolute; left: 61%; bottom: 3.2%; width: 10%; min-width: 64px; background: none; border: none; padding: 0; cursor: pointer; }
+.courtyard-dan .dan { width: 100%; height: auto; }
+.courtyard-dan:hover .dan { animation: hop 0.45s ease; }
+.college-ribbon { position: relative; background: var(--yale-blue); color: white; overflow: hidden; padding: 0.7rem 0; }
+.ribbon-track { display: inline-flex; gap: 1.6rem; white-space: nowrap; animation: ribbon 60s linear infinite; font-family: var(--font-display); font-size: 1rem; font-weight: 700; letter-spacing: 0.04em; }
+.ribbon-track em { color: #9fbbe0; font-style: normal; margin-left: 1.6rem; }
+@keyframes ribbon { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ---- Cute sitting Handsome Dan ---- */
+.dan { overflow: visible; }
+.dan-head { transform-box: fill-box; transform-origin: 50% 90%; animation: head-tilt-idle 6s ease-in-out infinite; }
+@keyframes head-tilt-idle { 0%, 70%, 100% { transform: rotate(0); } 76% { transform: rotate(-9deg); } 84% { transform: rotate(-9deg); } 90% { transform: rotate(4deg); } 95% { transform: rotate(0); } }
+.dan-tail { transform-box: fill-box; transform-origin: 0% 100%; animation: wag 0.5s ease-in-out infinite alternate; }
+@keyframes wag { from { transform: rotate(-14deg); } to { transform: rotate(16deg); } }
+.dan-eyes { transform-box: fill-box; transform-origin: center; animation: blink 4.2s infinite; }
+@keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.12); } }
+.dan-tongue { transform-box: fill-box; transform-origin: 50% 0%; transform: translateY(0); }
+.dan.licking .dan-head { animation: lick-lean 0.9s ease-in-out; }
+.dan.licking .dan-tongue { animation: slurp 0.42s ease-in-out 2; }
+@keyframes slurp { 0%, 100% { transform: translateY(0) scale(1, 1); } 50% { transform: translateY(6px) scale(1.25, 1.9); } }
+@keyframes lick-lean { 0%, 100% { transform: rotate(0) translateY(0); } 25% { transform: rotate(-7deg) translateY(-3px) scale(1.04); } 60% { transform: rotate(6deg) translateY(-3px) scale(1.04); } }
+@keyframes hop { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-12px) scaleY(1.03); } 70% { transform: translateY(0) scaleY(0.96); } }
+
+.dan-launcher { position: fixed; right: 1.6rem; bottom: 0.4rem; z-index: 50; width: auto; height: auto; padding: 0; border: none; border-radius: 0;
+  background: none; box-shadow: none; animation: none; cursor: pointer; filter: drop-shadow(0 6px 10px rgba(6, 26, 51, 0.25)); }
+.dan-launcher:hover { transform: none; }
+.dan-launcher:hover .dan { animation: hop 0.45s ease; }
+.dan-launcher.is-licking { transform: none; }
+.dan-shadow { position: absolute; left: 50%; bottom: 2px; width: 70%; height: 10px; margin-left: -35%; border-radius: 50%; background: rgba(6, 26, 51, 0.18); z-index: -1; filter: blur(2px); }
+.dan-bubble { right: 104px; bottom: 58px; font-family: var(--font-display); font-size: 0.85rem; }
+.lick-streak { right: 30px; bottom: 60px; }
+.chat-avatar { overflow: hidden; }
+.visit-dan { animation: none; }
+
+/* ---- Paw-print secrets ---- */
+.secret-star { color: var(--yale-light); text-shadow: none; animation: paw-peek 2.6s ease-in-out infinite; display: inline-flex; align-items: center; }
+.secret-star .paw-print { transform: rotate(-18deg); filter: drop-shadow(0 0 3px rgba(40, 109, 192, 0.45)); }
+@keyframes paw-peek { 0%, 100% { transform: scale(0.9); opacity: 0.6; } 50% { transform: scale(1.18) rotate(8deg); opacity: 1; } }
+.secret.seen .secret-star { opacity: 0.45; animation: none; }
+.secret.seen .secret-star .paw-print { filter: none; }
+.visit .secret-star, .footer .secret-star, .chat-header .secret-star { color: #ffffff; }
+.secrets-count { display: inline-flex; align-items: center; gap: 0.35rem; }
+
+
+/* =====================================================================
+   FINAL THEME: "Misty Gothic, in white". Yale navy on white and pale silver,
+   no glow. Fonts: IM Fell English SC (headings), IM Fell English (italic
+   asides), Cormorant Garamond (prose), Inter (UI).
+   ===================================================================== */
+:root {
+  --font-display: "IM Fell English SC", "IM Fell English", Georgia, serif;
+  --font-fell: "IM Fell English", Georgia, serif;
+  --mist: #eef2f8;
+  --line-navy: rgba(0, 53, 107, 0.18);
+}
+h1, h2, h3, .brand { font-family: var(--font-display); font-weight: 400; letter-spacing: 0.02em; }
+h1, h2 { color: var(--yale-blue); }
+.eyebrow { font-family: var(--font-display); font-weight: 400; letter-spacing: 0.24em; font-size: 0.78rem; }
+.btn { font-family: var(--font-display); font-weight: 400; font-size: 1.02rem; letter-spacing: 0.05em; }
+.brand { font-size: 1.45rem; }
+.brand small { font-family: var(--font-fell); font-style: italic; letter-spacing: 0.06em; font-size: 0.74rem; text-transform: none; }
+.navbar nav a { font-family: var(--font-display); font-size: 0.98rem; letter-spacing: 0.06em; text-transform: none; font-weight: 400; }
+.secrets-count { font: inherit; font-size: 0.82rem; font-weight: 600; cursor: pointer; color: white; background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.45); border-radius: 999px; padding: 0.3rem 0.75rem; display: inline-flex; align-items: center; gap: 0.4rem; }
+.secrets-count:hover { background: rgba(255, 255, 255, 0.22); }
+.card-body h3, .college-name, .shield, .price, .chat-title, .card-view, .pill { font-family: var(--font-display); font-weight: 400; }
+.card-body h3 { font-size: 1.06rem; }
+.price { font-size: 1.1rem; }
+.detail-info h1 { font-size: 2.4rem; }
+.detail-info h3 { font-family: var(--font-display); font-weight: 400; font-size: 1.2rem; }
+.head-note-kicker { font-family: var(--font-display); font-weight: 400; font-size: 0.85rem; text-transform: none; letter-spacing: 0.08em; }
+.drop-cap::first-letter { font-family: var(--font-display); font-weight: 400; }
+.signature { font-family: var(--font-fell); }
+.btn-ghost-light { background: rgba(255, 255, 255, 0.75); color: var(--yale-blue); border: 1px solid var(--yale-blue); backdrop-filter: blur(4px); }
+.btn-ghost-light:hover { background: white; }
+
+/* ---- Misty Gothic hero, in white ---- */
+.haunt { position: relative; margin: -2rem calc(50% - 50vw) 0; min-height: 680px; overflow: hidden; text-align: center;
+  background: linear-gradient(180deg, #ffffff 0%, #f6f8fc 35%, #e9eef6 70%, #dde5f0 100%); border-bottom: 1px solid var(--line-navy); }
+.mystic-hall { position: absolute; inset: 0; }
+.mh-skyline { position: absolute; left: 0; right: 0; bottom: 44px; width: 100%; height: 74%; }
+.mh-win { fill: #e6ecf5; }
+.mh-win.lit { fill: #ffffff; animation: window-flicker 6s ease-in-out infinite; }
+@keyframes window-flicker { 0%, 100% { opacity: 1; } 45% { opacity: 0.55; } 50% { opacity: 0.9; } 75% { opacity: 0.6; } }
+.mh-moon { position: absolute; top: 6%; right: 8%; width: 92px; height: 92px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 38%, #ffffff 0%, #f1f4f9 55%, #dce4ef 100%); border: 1px solid var(--line-navy); opacity: 0.9; }
+.mh-moon::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background:
+  radial-gradient(circle at 62% 58%, rgba(0, 53, 107, 0.07) 0 9%, transparent 10%),
+  radial-gradient(circle at 35% 68%, rgba(0, 53, 107, 0.06) 0 6%, transparent 7%); }
+.mh-fog { position: absolute; left: -50%; width: 200%; height: 240px; pointer-events: none; filter: blur(26px);
+  background: radial-gradient(ellipse at 20% 50%, rgba(255, 255, 255, 0.95), transparent 42%), radial-gradient(ellipse at 60% 60%, rgba(255, 255, 255, 0.85), transparent 45%), radial-gradient(ellipse at 90% 40%, rgba(255, 255, 255, 0.9), transparent 42%); }
+.mh-fog.f1 { bottom: 30px; opacity: 0.75; animation: fog-drift 40s linear infinite; }
+.mh-fog.f2 { bottom: 120px; opacity: 0.5; animation: fog-drift 58s linear infinite reverse; }
+.mh-fog.f3 { bottom: -50px; height: 260px; opacity: 0.9; animation: fog-drift 48s linear infinite; }
+@keyframes fog-drift { from { transform: translateX(0); } to { transform: translateX(25%); } }
+.mh-motes span { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: rgba(0, 53, 107, 0.28); opacity: 0;
+  animation-name: mote; animation-iteration-count: infinite; animation-timing-function: ease-in-out; }
+@keyframes mote { 0% { opacity: 0; transform: translate(0, 0); } 25% { opacity: 0.8; } 80% { opacity: 0.4; } 100% { opacity: 0; transform: translate(30px, -200px); } }
+.mh-ravens { position: absolute; top: 22%; left: -80px; width: 44px; opacity: 0.8; animation: raven 28s linear infinite; }
+.mh-ravens.r2 { top: 30%; width: 28px; animation-duration: 36s; animation-delay: 10s; }
+@keyframes raven { 0% { transform: translate(0, 0) scaleY(1); } 25% { transform: translate(30vw, -30px) scaleY(0.6); } 50% { transform: translate(60vw, 10px) scaleY(1); } 75% { transform: translate(90vw, -20px) scaleY(0.6); } 100% { transform: translate(120vw, 0) scaleY(1); } }
+.haunt-text { position: relative; z-index: 3; max-width: 820px; margin: 0 auto; padding: 4rem 1.5rem 0; animation: rise 1.1s ease both; }
+.haunt-text::before { content: ""; position: absolute; inset: 1.5rem -8% -2rem; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 45%, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.6) 45%, transparent 72%); }
+.haunt h1 { font-size: clamp(3.2rem, 8vw, 6rem); margin: 0.4rem 0 0; line-height: 1; color: var(--yale-blue); text-shadow: 0 2px 0 rgba(255, 255, 255, 0.9); }
+.haunt-sub { font-family: var(--font-fell); font-style: italic; font-size: 1.4rem; line-height: 1.45; color: #2c4161; max-width: 620px; margin: 1rem auto 1.8rem; }
+.haunt .college-ribbon { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; background: var(--yale-blue); }
+.ribbon-track { font-family: var(--font-display); font-weight: 400; font-size: 1.05rem; letter-spacing: 0.06em; color: #ffffff; }
+.ribbon-track em { color: #9fbbe0; }
+
+/* ---- Secrets: navy keys with a pulsing ring (clear on white) ---- */
+.secret-star { position: relative; color: var(--yale-blue); padding: 0.15rem 0.32rem; margin: 0 0.15rem; border-radius: 999px; animation: none;
+  background: #e7eef8; border: 1px solid rgba(0, 53, 107, 0.45); box-shadow: none; text-shadow: none; display: inline-flex; align-items: center; }
+.secret-star .secret-key { display: block; transform: rotate(-30deg); filter: none; }
+.secret-star:hover { background: var(--yale-blue); color: white; }
+.secret-halo { position: absolute; inset: -5px; border-radius: 999px; border: 1.5px solid rgba(0, 53, 107, 0.55); animation: halo 2s ease-out infinite; pointer-events: none; }
+@keyframes halo { from { opacity: 0.9; transform: scale(0.75); } to { opacity: 0; transform: scale(1.6); } }
+.secret.seen .secret-star { opacity: 0.5; background: transparent; border-style: dashed; }
+.secret.seen .secret-halo { display: none; }
+.visit .secret-star, .footer .secret-star, .chat-header .secret-star { color: white; background: rgba(255, 255, 255, 0.14); border-color: rgba(255, 255, 255, 0.6); }
+.visit .secret-halo, .footer .secret-halo, .chat-header .secret-halo { border-color: rgba(255, 255, 255, 0.7); }
+.secret-scroll { font-family: var(--font-serif); font-size: 1.1rem; }
+.secret-scroll strong { font-family: var(--font-display); font-weight: 400; font-size: 1.15rem; }
+.secret.auth-secret { position: absolute; top: 0.9rem; right: 1rem; }
+
+/* Grimoire */
+.grimoire-backdrop { position: fixed; inset: 0; z-index: 95; display: grid; place-items: center; background: rgba(10, 25, 50, 0.45); backdrop-filter: blur(3px); animation: rise 0.25s ease both; }
+.grimoire { position: relative; width: min(680px, 92vw); max-height: 86vh; overflow-y: auto; padding: 2.2rem 2.4rem; border-radius: 6px; background: #ffffff;
+  border: 1px solid #c8d5e6; box-shadow: 0 0 0 6px #ffffff, 0 0 0 7px var(--yale-blue), 0 30px 70px rgba(6, 26, 51, 0.35); }
+.grimoire h2 { margin: 0.2rem 0 0.4rem; font-size: 2rem; }
+.grimoire-intro { font-family: var(--font-fell); font-size: 1.1rem; color: #2c4161; }
+.grimoire-intro .secret-key { vertical-align: middle; color: var(--yale-blue); }
+.grimoire-close { position: absolute; top: 0.8rem; right: 1rem; background: none; border: none; color: var(--muted); font-size: 1.8rem; cursor: pointer; }
+.grimoire-progress { height: 6px; background: #e7eef8; border-radius: 999px; overflow: hidden; margin: 0.6rem 0 1.4rem; }
+.grimoire-progress span { display: block; height: 100%; background: var(--yale-blue); transition: width 0.5s; }
+.grimoire-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; counter-reset: secret; }
+.grimoire-list li { counter-increment: secret; padding: 0.75rem 0.9rem; border-radius: 6px; display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.95rem; }
+.grimoire-list li strong::before { content: counter(secret, upper-roman) ". "; color: var(--yale-light); }
+.grimoire-list li.unlocked { background: #f3f6fb; border: 1px solid #c8d5e6; }
+.grimoire-list li.unlocked strong { font-family: var(--font-display); font-weight: 400; color: var(--yale-blue); font-size: 1.05rem; }
+.grimoire-list li.unlocked span { font-family: var(--font-serif); font-size: 1.02rem; color: #1d2a3b; line-height: 1.35; }
+.grimoire-list li.locked { border: 1px dashed #c8d5e6; color: var(--muted); }
+.grimoire-list li.locked strong { font-family: var(--font-display); font-weight: 400; color: #8a99b1; }
+.grimoire-list li.locked span { font-family: var(--font-fell); font-style: italic; }
+@media (max-width: 640px) { .grimoire-list { grid-template-columns: 1fr; } }
+.footer-grimoire { font-family: var(--font-display); color: #cfe0f5; }
+
+/* ---- Secret-society auth pages ---- */
+.auth { text-align: center; max-width: 440px; box-shadow: 0 0 0 6px white, 0 0 0 7px #c8d5e6, 0 18px 40px rgba(6, 26, 51, 0.08); }
+.auth form { text-align: left; }
+.auth h1 { font-size: 2rem; }
+.society-seal { width: 62px; height: 62px; margin: 0 auto 0.6rem; border-radius: 50%; display: grid; place-items: center; color: white;
+  background: var(--yale-blue); box-shadow: 0 0 0 3px white, 0 0 0 4px var(--yale-blue); }
+.society-teaser { font-family: var(--font-fell); font-style: italic; font-size: 1.12rem; line-height: 1.5; color: #2c4161; margin: 0.4rem 0 1.2rem; }
+.society-whisper { font-family: var(--font-fell); color: var(--yale-light); font-size: 1rem; margin-top: 1.2rem; animation: whisper 6s ease-in-out infinite; }
+@keyframes whisper { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+.society-rites { text-align: left; margin: 0 0 1.3rem; padding: 0.9rem 1rem 0.9rem 2rem; border: 1px dashed #c8d5e6; border-radius: 6px;
+  font-family: var(--font-fell); font-size: 1.02rem; color: #2c4161; line-height: 1.45; background: #f7f9fc; }
+.society-rites em { color: var(--yale-blue); }
+
+/* ---- Sir Handsome Dan (no glow) ---- */
+.dan { overflow: visible; }
+.dan-head { animation: none; }
+.dan-eyes { transform-box: fill-box; transform-origin: center; animation: royal-blink 5.5s infinite; }
+@keyframes royal-blink { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(0.15); } }
+.dan-crown { transform-box: fill-box; transform-origin: 50% 100%; }
+.dan-tongue { transform-box: fill-box; transform-origin: 50% 0%; opacity: 0; }
+.dan.licking .dan-tongue { animation: royal-lick 0.42s ease-in-out 2; }
+@keyframes royal-lick { 0%, 100% { opacity: 0; transform: scale(1, 0.4); } 50% { opacity: 1; transform: translateY(3px) scale(1.15, 1.7); } }
+.dan.licking .dan-head { animation: royal-lean 0.9s ease-in-out; transform-box: view-box; transform-origin: 60px 70px; }
+@keyframes royal-lean { 0%, 100% { transform: none; } 30% { transform: rotate(-6deg) translateY(-2px); } 65% { transform: rotate(5deg) translateY(-2px); } }
+.dan.licking .dan-crown { animation: crown-tilt 0.9s ease-in-out; }
+@keyframes crown-tilt { 0%, 100% { transform: none; } 40% { transform: rotate(-10deg) translateY(-2px); } }
+@keyframes dan-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+.dan-launcher { right: 1.4rem; bottom: 1.2rem; padding: 0; border: none; background: none; border-radius: 50%;
+  filter: drop-shadow(0 8px 14px rgba(6, 26, 51, 0.28)); box-shadow: none; }
+.dan-launcher .dan { animation: dan-float 5s ease-in-out infinite; }
+.dan-launcher:hover .dan { animation: dan-float 5s ease-in-out infinite; }
+.dan-launcher.is-licking .dan { animation: none; transform: scale(1.1); }
+.dan-bubble { right: 104px; bottom: 36px; background: white; color: var(--yale-blue); border: 1px solid #c8d5e6; font-family: var(--font-fell); font-style: italic; font-size: 0.95rem; font-weight: 400; }
+.lick-streak { background: radial-gradient(ellipse at 50% 60%, rgba(173, 205, 245, 0.55), rgba(173, 205, 245, 0.2) 45%, transparent 70%); filter: blur(3px); }
+.heart { color: var(--yale-blue); text-shadow: none; }
+.chat-avatar { background: white; overflow: hidden; }
+.chat-title { font-size: 1.2rem; }
+.chat-subtitle { font-family: var(--font-fell); font-style: italic; font-size: 0.85rem; }
+.chat-input button { font-family: var(--font-display); }
+
+/* ---- Sir Handsome Dan: clickable everywhere ---- */
+.dan-launcher { bottom: 0.6rem; }
+.dan-launcher .dan { width: 96px; height: 96px; }
+.dan-bubble { right: 108px; bottom: 44px; opacity: 1; transform: none; font-family: var(--font-ui); font-style: normal; font-size: 0.8rem; font-weight: 600;
+  animation: bubble-nudge 7s ease-in-out infinite; }
+.dan-launcher:hover .dan-bubble { animation: none; opacity: 1; }
+@keyframes bubble-nudge { 0%, 70%, 100% { opacity: 0; transform: translateX(8px); } 8%, 60% { opacity: 1; transform: none; } }
+.dan-button { background: none; border: none; padding: 0; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 0.3rem; color: inherit; }
+.dan-button span { font-family: var(--font-display); font-size: 0.95rem; color: #dbe7f5; border-bottom: 1px solid rgba(219, 231, 245, 0.5); }
+.dan-button:hover .dan { animation: hop 0.45s ease; }
+.chat-avatar { border: none; padding: 0; cursor: pointer; }
+.chat-avatar:hover { transform: scale(1.06); }
+
+/* mini Dan sitting on the college ribbon */
+.ribbon-dan { position: absolute; z-index: 4; left: 3%; bottom: 30px; background: none; border: none; padding: 0; cursor: pointer; }
+.ribbon-dan .dan { display: block; filter: drop-shadow(0 4px 6px rgba(6, 26, 51, 0.25)); }
+.ribbon-dan:hover .dan { animation: hop 0.45s ease; }
+.ribbon-dan-tip { position: absolute; left: 70px; top: 6px; white-space: nowrap; background: white; color: var(--yale-blue); border: 1px solid #c8d5e6;
+  border-radius: 10px 10px 10px 2px; padding: 0.3rem 0.6rem; font-size: 0.78rem; font-weight: 600; box-shadow: 0 4px 12px rgba(6, 26, 51, 0.15);
+  opacity: 0; transform: translateX(-4px); transition: all 0.2s; pointer-events: none; }
+.ribbon-dan:hover .ribbon-dan-tip { opacity: 1; transform: none; }
+@keyframes hop { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 70% { transform: translateY(0) scaleY(0.97); } }
+
+/* college ribbon: pause on hover + pop-up */
+.college-ribbon:hover .ribbon-track { animation-play-state: paused; }
+.ribbon-college { cursor: help; padding: 0.15rem 0.2rem; border-radius: 4px; transition: background 0.15s; outline: none; }
+.ribbon-college:hover, .ribbon-college:focus { background: rgba(255, 255, 255, 0.16); }
+.ribbon-pop { position: fixed; z-index: 80; transform: translate(-50%, calc(-100% - 12px)); width: 270px; display: flex; gap: 0.7rem; align-items: flex-start; text-align: left;
+  background: white; color: #1d2a3b; border: 1px solid #c8d5e6; border-radius: 8px; padding: 0.8rem 0.9rem; pointer-events: none;
+  box-shadow: 0 0 0 4px white, 0 0 0 5px var(--yale-blue), 0 16px 34px rgba(6, 26, 51, 0.28); font-family: var(--font-serif); font-size: 1.02rem; line-height: 1.35; animation: rise 0.2s ease both; }
+.ribbon-pop::after { content: ""; position: absolute; left: 50%; bottom: -11px; margin-left: -7px; border: 7px solid transparent; border-top-color: var(--yale-blue); }
+.ribbon-pop strong { display: block; font-family: var(--font-display); font-weight: 400; color: var(--yale-blue); font-size: 1.05rem; margin-bottom: 0.15rem; }
+.ribbon-pop-shield { flex: 0 0 auto; width: 38px; height: 44px; font-size: 0.85rem; }
+
+/* create account: plain-language "why" */
+.why-account { text-align: left; margin: 0 0 1.1rem; padding: 0.85rem 1rem; background: #f3f6fb; border: 1px solid #c8d5e6; border-left: 3px solid var(--yale-blue); border-radius: 6px; font-size: 0.92rem; line-height: 1.45; }
+.why-account strong { display: block; font-family: var(--font-display); font-weight: 400; font-size: 1.05rem; color: var(--yale-blue); margin-bottom: 0.25rem; }
+.why-account ul { margin: 0; padding-left: 1.1rem; }
+.why-account li { margin: 0.15rem 0; color: #2c4161; }
+.small-whisper { margin: -0.4rem 0 1rem; font-size: 0.95rem; }
+.ask-btn .dan { background: white; border-radius: 50%; }
+.ribbon-pop { animation: pop-fade 0.18s ease both; }
+@keyframes pop-fade { from { opacity: 0; } to { opacity: 1; } }
+.ribbon-dan .dan { width: 72px; height: 72px; }
+
+/* ---- Sir Handsome Dan running along the college ribbon ---- */
+.ribbon-runner { position: absolute; z-index: 4; left: 0; bottom: 40px; height: 84px; display: flex; align-items: flex-end;
+  background: none; border: none; padding: 0; cursor: pointer; will-change: transform; }
+.ribbon-runner .dan, .ribbon-runner .running-dan { display: block; filter: drop-shadow(0 3px 4px rgba(6, 26, 51, 0.22)); }
+.ribbon-runner.to-left .running-dan { transform: scaleX(-1); }
+.ribbon-runner.mode-look .dan { animation: look-pop 0.35s ease both; margin-bottom: -2px; }
+@keyframes look-pop { from { transform: translateY(6px) scale(0.92); } to { transform: none; } }
+.ribbon-runner .ribbon-dan-tip { left: 50%; top: -30px; transform: translateX(-50%); }
+.ribbon-runner:hover .ribbon-dan-tip, .ribbon-runner.mode-look .ribbon-dan-tip { opacity: 1; transform: translateX(-50%); }
+.ribbon-runner.to-left .ribbon-dan-tip { left: 50%; }
+
+/* gallop */
+.run-leg { transform-box: view-box; animation: gallop 0.34s ease-in-out infinite alternate; }
+.run-leg.front-near { animation-delay: 0s; }
+.run-leg.front-far { animation-delay: -0.12s; }
+.run-leg.back-near { animation-name: gallop-back; animation-delay: -0.17s; }
+.run-leg.back-far { animation-name: gallop-back; animation-delay: -0.29s; }
+@keyframes gallop { from { transform: rotate(-38deg); } to { transform: rotate(30deg); } }
+@keyframes gallop-back { from { transform: rotate(34deg); } to { transform: rotate(-32deg); } }
+.run-body { animation: run-bob 0.34s ease-in-out infinite alternate; }
+@keyframes run-bob { from { transform: translateY(0); } to { transform: translateY(-4px); } }
+.run-ear { transform-box: fill-box; transform-origin: 100% 100%; animation: ear-flap 0.34s ease-in-out infinite alternate; }
+@keyframes ear-flap { from { transform: rotate(0); } to { transform: rotate(-18deg); } }
+.run-shadow { animation: shadow-pulse 0.34s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; }
+@keyframes shadow-pulse { from { transform: scaleX(1); } to { transform: scaleX(0.85); } }
+@media (prefers-reduced-motion: reduce) { .run-leg, .run-body, .run-ear, .run-shadow { animation: none; } }
